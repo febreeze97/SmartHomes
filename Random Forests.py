@@ -2,8 +2,8 @@ from sklearn.ensemble import RandomForestClassifier
 import matplotlib.pyplot as plt
 import pandas as pd
 
-#Smoothed = True;
-Smoothed = False;
+Smoothed = True # Better results with smoothed data
+#Smoothed = False
 
 df = pd.DataFrame()
 for i in range(10):
