@@ -12,21 +12,21 @@ Times = unique(AllTimes);
 Gateway = T.(2);
 GateIndex = Indexer(Gateway);
 
-Acc = RepeatRemover(T.(3),AllTimes,Times);
-Acc(:,2) = RepeatRemover(T.(4),AllTimes,Times);
-Acc(:,3) = RepeatRemover(T.(5),AllTimes,Times);
+Acc = RepeatRemover(T.(3),AllTimes,Times,1);
+Acc(:,2) = RepeatRemover(T.(4),AllTimes,Times,1);
+Acc(:,3) = RepeatRemover(T.(5),AllTimes,Times,1);
 
 AllRSSI = T.(6);
 RSSI = CreateMatrixRSSI(AllRSSI,GateIndex,AllTimes,Times);
 
 Room = T.(7);
 RoomIndex = Indexer(Room);
-RoomIndex = RepeatRemover(RoomIndex,AllTimes,Times);
+RoomIndex = RepeatRemover(RoomIndex,AllTimes,Times,0);
 
 %Act = [];
 %Act = cell2mat(T);
 if size(T,2) >= 8
-    Act = RepeatRemover(T.(8),AllTimes,Times);
+    Act = RepeatRemover(T.(8),AllTimes,Times,0);
     Act = char(Act);
 else
     Act = [];
@@ -94,7 +94,7 @@ end
 %         end
 %     end
     
-    function [Processed] = RepeatRemover(Original,AllTimes,Times)
+    function [Processed] = RepeatRemover(Original,AllTimes,Times,Mean)
         %Index = Indexer(Original);
         if iscell(Original)
             Processed = cell(size(Times,1),1,1);
@@ -104,7 +104,11 @@ end
         %Processed = zeros(size(Times));
         for i = 1:size(Times,1)
             Temp = Original(AllTimes==Times(i));
-            Processed(i) = Temp(1);
+            if Mean
+                Processed(i) = mean(Temp);
+            else
+                Processed(i) = Temp(1);
+            end
         end
     end
 

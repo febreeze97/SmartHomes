@@ -29,10 +29,10 @@ end
 Output = OutputFolder+"/"+FileName+".csv";
 
 fid = fopen(Output,'w'); 
-fprintf(fid,'Sensor 1,Sensor 2,Sensor 3,Sensor 4,Room\n');
+fprintf(fid,'Sensor 1,Sensor 2,Sensor 3,Sensor 4,Room,AccX,AccY,AccZ\n');
 fclose(fid);
 
-dlmwrite(Output,[RSSI,RoomIndex],'-append')
+dlmwrite(Output,[RSSI,RoomIndex,Acc],'-append')
 %csvwrite(Output,[RSSI,RoomIndex])
 
 end
