@@ -10,7 +10,7 @@ AllTimes = T.(1);
 Times = unique(AllTimes);
 
 Gateway = T.(2);
-GateIndex = Indexer(Gateway);
+GateIndex = RoomIndexer(Gateway);
 
 Acc = RepeatRemover(T.(3),AllTimes,Times,1);
 Acc(:,2) = RepeatRemover(T.(4),AllTimes,Times,1);
@@ -20,14 +20,14 @@ AllRSSI = T.(6);
 RSSI = CreateMatrixRSSI(AllRSSI,GateIndex,AllTimes,Times);
 
 Room = T.(7);
-RoomIndex = Indexer(Room);
+RoomIndex = RoomIndexer(Room);
 RoomIndex = RepeatRemover(RoomIndex,AllTimes,Times,0);
 
 %Act = [];
 %Act = cell2mat(T);
 if size(T,2) >= 8
-    Act = RepeatRemover(T.(8),AllTimes,Times,0);
-    Act = char(Act);
+    Activity = RepeatRemover(T.(8),AllTimes,Times,0);
+    Act = ActivityIndexer(Activity);
 else
     Act = [];
 end
@@ -58,7 +58,7 @@ end
 
 
 %% Define required functions
-    function [Index] = Indexer(Text)
+    function [Index] = RoomIndexer(Text)
         Index = zeros(size(Text));
         for i = 1:length(Text)
             if isequal(Text(i),{'living'})
@@ -68,6 +68,21 @@ end
             elseif isequal(Text(i),{'bedroom'})
                 Index(i) = 3;
             elseif isequal(Text(i),{'custom'}) || isequal(Text(i),{'stairs'})
+                Index(i) = 4;
+            end
+        end
+    end
+
+    function [Index] = ActivityIndexer(Text)
+        Index = zeros(size(Text));
+        for i = 1:length(Text)
+            if isequal(Text(i),{'sitting'})
+                Index(i) = 1;
+            elseif isequal(Text(i),{'walking'})
+                Index(i) = 2;
+            elseif isequal(Text(i),{'lying'})
+                Index(i) = 3;
+            elseif isequal(Text(i),{'custom'})
                 Index(i) = 4;
             end
         end
