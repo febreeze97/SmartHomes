@@ -29,8 +29,11 @@ plt.show()
 
 c = 0
 for i in range(len(prediction)):
- if prediction[i] == df2['Room'][i]:
-     c+=1
+ # if prediction[i] == df2['Room'][i]:
+ #     c+=1
+ if df['Room'][i] == 4:
+     if df['Room'][i-1] == 2:
+         print('yeeeet')
 
 print((c/len(prediction))*100)
 print(c)
