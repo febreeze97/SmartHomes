@@ -17,6 +17,9 @@ Emis  = [0.9203,      0, 0.0797,      0;
 
 States = hmmviterbi(Seq,Trans,Emis);
 
-plot(States - RoomIndex')
+figure;
+plot(States - RoomIndex','g-')
+hold on
+plot(Seq - RoomIndex,'r--')
 
 Accuracy = sum(States==RoomIndex')/length(States);

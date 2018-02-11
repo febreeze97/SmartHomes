@@ -2,10 +2,9 @@ function [] = ReformatData(InputFolder, OutputFolder, FileName, Pre)
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 
-Disp = 0;
+Disp = 1;
 
 [Times, RSSI, Acc, RoomIndex, Act] = OpenCSVFile(InputFolder, FileName, 0);
-Orig = RSSI;
 
 switch Pre
     case 0
@@ -28,9 +27,9 @@ switch Pre
 
         RSSI = ifft(FilteredFM);
     case 2
-        RSSI = movmean(RSSI,[10,10]);
+        RSSI = movmean(RSSI,[10,0]);
     case 3
-        RSSI = movmedian(RSSI,[10,10]);
+        RSSI = movmedian(RSSI,[10,0]);
 end
 
 Output = OutputFolder+"/"+FileName+".csv";
@@ -43,8 +42,7 @@ dlmwrite(Output,[RSSI,RoomIndex,Acc,Act],'-append')
 %csvwrite(Output,[RSSI,RoomIndex])
 
 if Disp
-    PlotRSSI(Orig)
-    PlotRSSI(RSSI)
+    
 end
 
 end
