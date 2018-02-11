@@ -10,55 +10,36 @@ AllTimes = T.(1);
 Times = unique(AllTimes);
 
 Gateway = T.(2);
-GateIndex = Indexer(Gateway);
+GateIndex = RoomIndexer(Gateway);
 
-Acc = RepeatRemover(T.(3),AllTimes,Times);
-Acc(:,2) = RepeatRemover(T.(4),AllTimes,Times);
-Acc(:,3) = RepeatRemover(T.(5),AllTimes,Times);
+Acc = RepeatRemover(T.(3),AllTimes,Times,1);
+Acc(:,2) = RepeatRemover(T.(4),AllTimes,Times,1);
+Acc(:,3) = RepeatRemover(T.(5),AllTimes,Times,1);
 
 AllRSSI = T.(6);
 RSSI = CreateMatrixRSSI(AllRSSI,GateIndex,AllTimes,Times);
 
 Room = T.(7);
-RoomIndex = Indexer(Room);
-RoomIndex = RepeatRemover(RoomIndex,AllTimes,Times);
+RoomIndex = RoomIndexer(Room);
+RoomIndex = RepeatRemover(RoomIndex,AllTimes,Times,0);
 
 %Act = [];
 %Act = cell2mat(T);
 if size(T,2) >= 8
-    Act = RepeatRemover(T.(8),AllTimes,Times);
-    Act = char(Act);
+    Activity = RepeatRemover(T.(8),AllTimes,Times,0);
+    Act = ActivityIndexer(Activity);
 else
     Act = [];
 end
 
 %% Visulise result graph plotting
 if Disp == 1
-    hold on;
-    Num = 1:size(RSSI,1);
-    %xlim(datetime(2014,[7 8],[12 23]))
-    xlim([0, Num(end)-1]);
-    %xlim([min(Times), max(Times)])
-    %set(gca,'XLim',[min(Times), max(Times)]) 
-    ylim([-100,0])
-    plot(Num, RSSI(:,1), 'r-')
-    plot(Num, RSSI(:,2), 'b-')
-    plot(Num, RSSI(:,3), 'g-')
-    plot(Num, RSSI(:,4), 'k-')
-    
-    % define background colours
-    Colours = ['r','b','g','k'];
-    
-    for m = 2:size(RSSI,1)
-        X = [m-2, m-1, m-1, m-2]; Y = [0 0 -100 -100];
-        patch(X,Y, Colours(RoomIndex(m)), 'FaceAlpha',0.2, 'EdgeColor','none')
-    end
-    
+    PlotRSSI(RSSI,RoomIndex)
 end
 
 
 %% Define required functions
-    function [Index] = Indexer(Text)
+    function [Index] = RoomIndexer(Text)
         Index = zeros(size(Text));
         for i = 1:length(Text)
             if isequal(Text(i),{'living'})
@@ -68,6 +49,21 @@ end
             elseif isequal(Text(i),{'bedroom'})
                 Index(i) = 3;
             elseif isequal(Text(i),{'custom'}) || isequal(Text(i),{'stairs'})
+                Index(i) = 4;
+            end
+        end
+    end
+
+    function [Index] = ActivityIndexer(Text)
+        Index = zeros(size(Text));
+        for i = 1:length(Text)
+            if isequal(Text(i),{'sitting'})
+                Index(i) = 1;
+            elseif isequal(Text(i),{'walking'})
+                Index(i) = 2;
+            elseif isequal(Text(i),{'lying'})
+                Index(i) = 3;
+            elseif isequal(Text(i),{'custom'})
                 Index(i) = 4;
             end
         end
@@ -94,7 +90,7 @@ end
 %         end
 %     end
     
-    function [Processed] = RepeatRemover(Original,AllTimes,Times)
+    function [Processed] = RepeatRemover(Original,AllTimes,Times,Mean)
         %Index = Indexer(Original);
         if iscell(Original)
             Processed = cell(size(Times,1),1,1);
@@ -104,7 +100,11 @@ end
         %Processed = zeros(size(Times));
         for i = 1:size(Times,1)
             Temp = Original(AllTimes==Times(i));
-            Processed(i) = Temp(1);
+            if Mean
+                Processed(i) = mean(Temp);
+            else
+                Processed(i) = Temp(1);
+            end
         end
     end
 
