@@ -63,8 +63,8 @@ dlmwrite(Output,[RSSI,RoomIndex,Acc,Act],'-append')
 %csvwrite(Output,[RSSI,RoomIndex])
 
 if Disp
-    PlotRSSI(Orig)
-    PlotRSSI(RSSI)
+    PlotRSSI(Orig,RoomIndex)
+    PlotRSSI(RSSI,RoomIndex)
 end
 
 end
