@@ -33,13 +33,15 @@ switch Pre
         RSSI = movmedian(RSSI,[10,10]);
         
     case 4
+        RSSI = movmedian(RSSI,[10,10]);
+        
         Fs = 1;
         fmax = Fs*0.5;
         
         FM = fft(RSSI);
         FM = fftshift(FM);
         
-        freq = 0.1;
+        freq = 0.15;
         num = floor( 0.5 * (freq/fmax) * size(FM,1));
         N_clear = floor(size(FM,1)/2) - num + 1;
         FilteredFM = FM;
@@ -50,7 +52,7 @@ switch Pre
 
         RSSI = ifft(FilteredFM);
         
-        RSSI = movmean(RSSI,[10,10]);
+        %RSSI = movmean(RSSI,[3,3]);
 end
 
 Output = OutputFolder+"/"+FileName+".csv";
@@ -63,7 +65,7 @@ dlmwrite(Output,[RSSI,RoomIndex,Acc,Act],'-append')
 %csvwrite(Output,[RSSI,RoomIndex])
 
 if Disp
-    PlotRSSI(Orig,RoomIndex)
+    %PlotRSSI(Orig,RoomIndex)
     PlotRSSI(RSSI,RoomIndex)
 end
 
