@@ -2,7 +2,7 @@ function [] = ReformatData(InputFolder, OutputFolder, FileName, Pre)
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 
-Disp = 0;
+Disp = 1;
 
 [Times, RSSI, Acc, RoomIndex, Act] = OpenCSVFile(InputFolder, FileName, 0);
 Orig = RSSI;
@@ -31,6 +31,26 @@ switch Pre
         RSSI = movmean(RSSI,[10,10]);
     case 3
         RSSI = movmedian(RSSI,[10,10]);
+        
+    case 4
+        Fs = 1;
+        fmax = Fs*0.5;
+        
+        FM = fft(RSSI);
+        FM = fftshift(FM);
+        
+        freq = 0.1;
+        num = floor( 0.5 * (freq/fmax) * size(FM,1));
+        N_clear = floor(size(FM,1)/2) - num + 1;
+        FilteredFM = FM;
+        FilteredFM(1:N_clear,1:4) = 0;
+        FilteredFM(end-N_clear+2:end,1:4) = 0;
+        %plot(log(abs(FilteredFM(:,1))+1))
+        FilteredFM = fftshift(FilteredFM);
+
+        RSSI = ifft(FilteredFM);
+        
+        RSSI = movmean(RSSI,[10,10]);
 end
 
 Output = OutputFolder+"/"+FileName+".csv";
