@@ -1,7 +1,7 @@
 clear all;
 
-%[Times, RSSI, Acc, RoomIndex, Act] = OpenCSVFile("Training","10",0);
-[Times, RSSI, Acc, RoomIndex, Act] = OpenCSVFile("Test","Freeliving-pub",0);
+[Times, RSSI, Acc, RoomIndex, Act] = OpenCSVFile("Training","2",0);
+%[Times, RSSI, Acc, RoomIndex, Act] = OpenCSVFile("Test","Freeliving-pub",0);
 
 %M(:,1) = M(:,1) - mean(M(:,1));
 
@@ -19,8 +19,11 @@ MagFM = abs(FM);
 %Phase = angle(FM);
 
 figure;
-plot( Hz, log(MagFM(:,1)+1) )
-xlabel('Freq / Hz')
+plot( Hz, log(MagFM(:,1)+1) ,'k-')
+xlabel('Freq / Hz'); ylabel('Magnitude'); ylim([0,12])
+patch([-0.5, -0.1, -0.1, -0.5],[12 12 0 0], 'r', 'FaceAlpha',0.1, 'EdgeColor','none')
+patch([-0.1,  0.1,  0.1, -0.1],[12 12 0 0], 'g', 'FaceAlpha',0.1, 'EdgeColor','none')
+patch([ 0.1,  0.5,  0.5,  0.1],[12 12 0 0], 'r', 'FaceAlpha',0.1, 'EdgeColor','none')
 %plot(MagFM(:,1))
 
 %figure;
@@ -39,25 +42,28 @@ FilteredFM = fftshift(FilteredFM);
 FilteredSignal = ifft(FilteredFM);
 
 figure;
-plot( Hz, log(abs(fftshift(FilteredFM(:,1)))+1) )
-xlabel('Freq / Hz')
+plot( Hz, log(abs(fftshift(FilteredFM(:,1)))+1) ,'k-')
+xlabel('Freq / Hz'); ylabel('Magnitude'); ylim([0,12])
+patch([-0.5, -0.1, -0.1, -0.5],[12 12 0 0], 'r', 'FaceAlpha',0.1, 'EdgeColor','none')
+patch([-0.1,  0.1,  0.1, -0.1],[12 12 0 0], 'g', 'FaceAlpha',0.1, 'EdgeColor','none')
+patch([ 0.1,  0.5,  0.5,  0.1],[12 12 0 0], 'r', 'FaceAlpha',0.1, 'EdgeColor','none')
 
 %FilteredSignal = real(FilteredSignal);
 
-figure;
-subplot(2,1,1)
-plot(RSSI(:,1),'r-')
-hold on
-plot(RSSI(:,2),'b-')
-plot(RSSI(:,3),'g-')
-plot(RSSI(:,4),'k-')
-
-subplot(2,1,2)
-plot(FilteredSignal(:,1),'r-')
-hold on
-plot(FilteredSignal(:,2),'b-')
-plot(FilteredSignal(:,3),'g-')
-plot(FilteredSignal(:,4),'k-')
+% % figure;
+% % subplot(2,1,1)
+% % plot(RSSI(:,1),'r-')
+% % hold on
+% % plot(RSSI(:,2),'b-')
+% % plot(RSSI(:,3),'g-')
+% % plot(RSSI(:,4),'k-')
+% % 
+% % subplot(2,1,2)
+% % plot(FilteredSignal(:,1),'r-')
+% % hold on
+% % plot(FilteredSignal(:,2),'b-')
+% % plot(FilteredSignal(:,3),'g-')
+% % plot(FilteredSignal(:,4),'k-')
 
 
 % % 
