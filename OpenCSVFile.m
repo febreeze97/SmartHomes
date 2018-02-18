@@ -1,4 +1,4 @@
-function [Times, RSSI, Acc, RoomIndex, Act] = OpenCSVFile(FolderName, FileName, Disp)
+function [Times, RSSI, Acc, RoomIndex, Act] = OpenCSVFile(FolderName, FileName, Miss, Disp)
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -18,6 +18,11 @@ Acc(:,3) = RepeatRemover(T.(5),AllTimes,Times,1);
 
 AllRSSI = T.(6);
 RSSI = CreateMatrixRSSI(AllRSSI,GateIndex,AllTimes,Times);
+if Miss == 0
+    RSSI = fillmissing(RSSI,'constant',-100);
+elseif Miss == 1
+    RSSI = fillmissing(RSSI,'linear');
+end
 
 Room = T.(7);
 RoomIndex = RoomIndexer(Room);
@@ -70,7 +75,7 @@ end
     end
 
     function [RSSI] = CreateMatrixRSSI(Values,Gateway,AllTimes,Times)
-        RSSI = zeros(length(Times),4); RSSI = RSSI - 100;
+        RSSI = zeros(length(Times),4); RSSI = NaN*RSSI;
         for i = 1:size(RSSI,1)
             Time = Times(i);
             A = Values(AllTimes==Time);
@@ -79,6 +84,8 @@ end
                 RSSI(i,B(n)) = A(n);
             end
         end
+        RSSI(1, isnan(RSSI(1,:)) ) = -100;
+        RSSI(end, isnan(RSSI(end,:)) ) = -100;
     end
 
 %     function [Processed] = RepeatIntRemover(Original,AllTimes,Times)

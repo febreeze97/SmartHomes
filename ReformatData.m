@@ -1,10 +1,10 @@
-function [] = ReformatData(InputFolder, OutputFolder, FileName, Pre)
+function [] = ReformatData(InputFolder, OutputFolder, FileName, Miss, Pre)
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 
 Disp = 1;
 
-[Times, RSSI, Acc, RoomIndex, Act] = OpenCSVFile(InputFolder, FileName, 0);
+[Times, RSSI, Acc, RoomIndex, Act] = OpenCSVFile(InputFolder, FileName, Miss, 0);
 Orig = RSSI;
 
 switch Pre
