@@ -1,8 +1,8 @@
-function [Times, RSSI, Acc, RoomIndex, Act] = OpenCSVFile(FolderName, FileName, Miss, Disp)
+function [Times, RSSI, Acc, RoomIndex, Act] = OpenCSVFile(InputFolder, FileName, Miss, Disp)
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 
-File = FolderName+"/"+FileName+".csv";
+File = InputFolder+"/"+FileName+".csv";
 
 T = readtable(File);
 

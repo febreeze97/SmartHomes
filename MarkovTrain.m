@@ -1,6 +1,6 @@
 clear all;
 
-[~, RSSI, ~, RoomIndex, ~] = OpenCSVFile("Test","freeliving-pub",0);
+[~, RSSI, ~, RoomIndex, ~] = OpenCSVFile("Constant/Test","freeliving-pub",0);
 
 RoomIndex = RoomIndex';
 

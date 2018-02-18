@@ -1,7 +1,7 @@
 clear all;
 
-[Times, RSSI, Acc, RoomIndex, Act] = OpenCSVFile("Training","2",0);
-%[Times, RSSI, Acc, RoomIndex, Act] = OpenCSVFile("Test","Freeliving-pub",0);
+[Times, RSSI, Acc, RoomIndex, Act] = OpenCSVFile("Constant/Training","2",0);
+%[Times, RSSI, Acc, RoomIndex, Act] = OpenCSVFile("Constant/Test","Freeliving-pub",0);
 
 %M(:,1) = M(:,1) - mean(M(:,1));
 

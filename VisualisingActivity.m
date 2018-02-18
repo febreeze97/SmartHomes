@@ -3,7 +3,7 @@ clear all;
 Acc = [];
 Act = [];
 for i = 1:10
-    File = "Reformatted/"+int2str(i)+".csv";
+    File = "Constant/Reformatted/"+int2str(i)+".csv";
     T = readtable(File);
     Acc = [Acc; T.(6), T.(7), T.(8)];
     Act = [Act; T.(9)];

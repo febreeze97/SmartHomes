@@ -55,7 +55,11 @@ switch Pre
         %RSSI = movmean(RSSI,[3,3]);
 end
 
-Output = OutputFolder+"/"+FileName+".csv";
+if Miss == 0
+    Output = "Constant/"+OutputFolder+"/"+FileName+".csv";
+elseif Miss == 1
+    Output = "Linear/"+OutputFolder+"/"+FileName+".csv";
+end
 
 fid = fopen(Output,'w'); 
 fprintf(fid,'Sensor 1,Sensor 2,Sensor 3,Sensor 4,Room,AccX,AccY,AccZ,Activity\n');

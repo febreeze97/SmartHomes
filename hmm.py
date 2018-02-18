@@ -5,14 +5,14 @@ import numpy as np
 
 df = pd.DataFrame()
 for i in range(10):
-    # df1 = pd.read_csv('Reformated/'+ str(i+1) + '.csv')
-    df1 = pd.read_csv('LowPassFilter/' + str(i + 1) + '.csv')
+    # df1 = pd.read_csv('Constant/Reformated/'+ str(i+1) + '.csv')
+    df1 = pd.read_csv('Constant/LowPassFilter/' + str(i + 1) + '.csv')
     # df.append(df1, ignore_index = True)
     frames = [df, df1]
     df = pd.concat(frames, ignore_index=True)
 
-# df2 = pd.read_csv('Reformated/freeliving-pub.csv')
-df2 = pd.read_csv('LowPassFilter/freeliving-pub.csv')
+# df2 = pd.read_csv('Constant/Reformated/freeliving-pub.csv')
+df2 = pd.read_csv('Constant/LowPassFilter/freeliving-pub.csv')
 
 # startprob = np.array([0.25, 0.25, 0.25, 0.25])
 # transmat = np.array([[0.7, 0.15, 0, 0.15], [0.2, 0.5, 0, 0.3], [0, 0, 0.8, 0.2], [0.3, 0.3, 0.3, 0.1]])

@@ -8,17 +8,17 @@ Smoothed = True # Better results with smoothed data
 df = pd.DataFrame()
 for i in range(10):
     if not Smoothed:
-        df1 = pd.read_csv('Reformatted/'+ str(i+1) + '.csv')
+        df1 = pd.read_csv('Constant/Reformatted/'+ str(i+1) + '.csv')
     else:
-        df1 = pd.read_csv('LowPassFilter/' + str(i + 1) + '.csv')
+        df1 = pd.read_csv('Constant/LowPassFilter/' + str(i + 1) + '.csv')
     # df.append(df1, ignore_index = True)
     frames = [df, df1]
     df = pd.concat(frames, ignore_index=True)
 
 if not Smoothed:
-    df2 = pd.read_csv('Reformatted/freeliving-pub.csv')
+    df2 = pd.read_csv('Constant/Reformatted/freeliving-pub.csv')
 else:
-    df2 = pd.read_csv('LowPassFilter/freeliving-pub.csv')
+    df2 = pd.read_csv('Constant/LowPassFilter/freeliving-pub.csv')
 
 clf = RandomForestClassifier(n_jobs = -1, random_state=0, n_estimators=100)
 y = df['Room'].values

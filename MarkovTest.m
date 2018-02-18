@@ -1,6 +1,6 @@
 clear all;
 
-[~,~,~,RoomIndex,~] = OpenCSVFile("Test","freeliving-pub",0);
+[~,~,~,RoomIndex,~] = OpenCSVFile("Constant/Test","freeliving-pub",0);
 
 Data = readtable('Random_Forest_Data.csv');
 Seq = Data.(2); Seq(1) = [];

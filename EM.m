@@ -1,7 +1,7 @@
 clear all;
 
 RSSI = []; Labels = [];
-Folder = "LowPassFilter";
+Folder = "Constant/LowPassFilter";
 
 %for i = 1:1
 %    File = Folder+"/"+int2str(i)+".csv";
@@ -10,7 +10,7 @@ Folder = "LowPassFilter";
 %    Labels = [Labels; T.(5)];
 %end
 
-T = readtable("Reformatted/freeliving-pub.csv");
+T = readtable("Constant/Reformatted/freeliving-pub.csv");
 RSSI = [T.(1), T.(2), T.(3), T.(4)];
 Labels = [T.(5)];
 
