@@ -22,6 +22,7 @@ if Miss == 0
     RSSI = fillmissing(RSSI,'constant',-100);
 elseif Miss == 1
     RSSI = fillmissing(RSSI,'linear');
+    %RSSI = fillmissing(RSSI,'linear','EndValues',-100);
 end
 
 Room = T.(7);
