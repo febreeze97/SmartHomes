@@ -28,12 +28,12 @@ switch Pre
 
         RSSI = ifft(FilteredFM);
     case 2
-        RSSI = movmean(RSSI,[10,10]);
+        RSSI = movmean(RSSI,[5,5]);
     case 3
-        RSSI = movmedian(RSSI,[10,10]);
+        RSSI = movmedian(RSSI,[5,5]);
         
     case 4
-        RSSI = movmedian(RSSI,[10,10]);
+        RSSI = movmedian(RSSI,[5,5]);
         
         Fs = 1;
         fmax = Fs*0.5;
