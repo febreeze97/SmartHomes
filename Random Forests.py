@@ -2,12 +2,16 @@ from sklearn.ensemble import RandomForestClassifier
 import matplotlib.pyplot as plt
 import pandas as pd
 
-Miss = 'Constant'
-Pre = 'Reformatted'
-Pre = 'LowPassFilter' # Better results with smoothed data
+#Miss = 'Constant'
+Miss = 'Linear'
+
+#Pre = 'Reformatted'
+#Pre = 'LowPassFilter' # Better results with smoothed data
+#Pre = 'MovingMean'
+Pre = 'MovingMedian'
 
 df = pd.DataFrame()
-for i in range(9):
+for i in range(10):
     df1 = pd.read_csv(Miss+'/'+Pre+'/'+ str(i+1) + '.csv')
     # df.append(df1, ignore_index = True)
     frames = [df, df1]
