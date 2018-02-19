@@ -41,7 +41,7 @@ switch Pre
         FM = fft(RSSI);
         FM = fftshift(FM);
         
-        freq = 0.15;
+        freq = 0.1;
         num = floor( 0.5 * (freq/fmax) * size(FM,1));
         N_clear = floor(size(FM,1)/2) - num + 1;
         FilteredFM = FM;
@@ -52,7 +52,7 @@ switch Pre
 
         RSSI = ifft(FilteredFM);
         
-        %RSSI = movmean(RSSI,[3,3]);
+        RSSI = movmean(RSSI,[5,5]);
 end
 
 if Miss == 0
