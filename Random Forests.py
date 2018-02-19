@@ -31,7 +31,7 @@ fig = plt.figure()
 # plt.plot(clf.predict(df2[features]))
 # plt.plot(df2['Room'])
 plt.plot(clf.predict(df2[features])-df2['Room'])
-clf.predict_proba(df2[features])
+len(clf.predict_proba(df2[features]))
 plt.show()
 
 """c = 0
