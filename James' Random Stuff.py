@@ -60,6 +60,8 @@ for row in Mat:
     print(count)"""
     print(row)
 
+print(Size)
+
 """print((c/len(prediction))*100)
 print(c)
 # finaldf = pd.DataFrame(clf.predict(df2[features]))
