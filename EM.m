@@ -1,50 +1,54 @@
 clear all;
 warning('off')
-
+% % 
 classes = 4;
-
-RSSI = []; Labels = [];
+% % 
+% % RSSI = []; Labels = [];
 Folder = "Constant/LowPassFilter";
 %Folder = "Constant/MedianAndLowFilter"; % Reformatted and MovingMedian don't work
-
-for i = 1:10
-   File = Folder+"/"+int2str(i)+".csv";
-   T = readtable(File);
-   RSSI = [RSSI; [T.(1), T.(2), T.(3), T.(4)]];
-   Labels = [Labels; T.(5)];
-end
-
+% % 
+% % for i = 1:10
+% %    File = Folder+"/"+int2str(i)+".csv";
+% %    T = readtable(File);
+% %    RSSI = [RSSI; [T.(1), T.(2), T.(3), T.(4)]];
+% %    Labels = [Labels; T.(5)];
+% % end
+% % 
 T = readtable(Folder+"/freeliving-pub.csv");
-TestRSSI = [T.(1), T.(2), T.(3), T.(4)];
+% % TestRSSI = [T.(1), T.(2), T.(3), T.(4)];
 TestLabels = [T.(5)];
-
+% % 
 clear T;
 warning('on')
+% % 
+% % %[U,~,~] = svd(cov(RSSI));
+% % 
+% % %Test = RSSI*U;
+% % 
+% % %figure;
+% % %plot3(Test(Labels==1,1),Test(Labels==1,2),Test(Labels==1,3),'bx')
+% % %hold on
+% % %plot3(Test(Labels==2,1),Test(Labels==2,2),Test(Labels==2,3),'rx')
+% % %plot3(Test(Labels==3,1),Test(Labels==3,2),Test(Labels==3,3),'gx')
+% % %plot3(Test(Labels==4,1),Test(Labels==4,2),Test(Labels==4,3),'kx')
+% % 
+% % Means = cell(classes,1);
+% % Covar = cell(classes,1);
+% % 
+% % for i = 1:classes
+% %     Means{i} = mean( RSSI(Labels==i,:) );
+% %     Covar{i} = cov ( RSSI(Labels==i,:) );
+% % end
+% % 
+% % Prob = zeros(length(TestRSSI),classes);
+% % 
+% % for i = 1:classes
+% %     Prob(:,i) = mvnpdf(TestRSSI,Means{i},Covar{i});
+% % end
 
-%[U,~,~] = svd(cov(RSSI));
-
-%Test = RSSI*U;
-
-%figure;
-%plot3(Test(Labels==1,1),Test(Labels==1,2),Test(Labels==1,3),'bx')
-%hold on
-%plot3(Test(Labels==2,1),Test(Labels==2,2),Test(Labels==2,3),'rx')
-%plot3(Test(Labels==3,1),Test(Labels==3,2),Test(Labels==3,3),'gx')
-%plot3(Test(Labels==4,1),Test(Labels==4,2),Test(Labels==4,3),'kx')
-
-Means = cell(classes,1);
-Covar = cell(classes,1);
-
-for i = 1:classes
-    Means{i} = mean( RSSI(Labels==i,:) );
-    Covar{i} = cov ( RSSI(Labels==i,:) );
-end
-
-Prob = zeros(length(TestRSSI),classes);
-
-for i = 1:classes
-    Prob(:,i) = mvnpdf(TestRSSI,Means{i},Covar{i});
-end
+T = readtable("RandomForestsProbabilities.csv");
+Prob = [T.(2), T.(3), T.(4), T.(5)]; Prob(1,:) = [];
+clear T;
 
 %figure;
 %plot(Prob(:,1)./sum(Prob,2))
@@ -52,15 +56,15 @@ end
 %figure;
 %plot(TestLabels==1)
 
-T = [1/3, 1/3,   0, 1/3;
-     1/3, 1/3,   0, 1/3;
-       0,   0, 1/2, 1/2;
-     1/4, 1/4, 1/4, 1/4];
+% T = [1/3, 1/3,   0, 1/3;
+%      1/3, 1/3,   0, 1/3;
+%        0,   0, 1/2, 1/2;
+%      1/4, 1/4, 1/4, 1/4];
 
-% T = [0.99998, 0.00001,      0, 0.00001;
-%      0.00001, 0.99998,      0, 0.00001;
-%           0,      0, 0.99999, 0.00001;
-%      0.00001, 0.00001, 0.99997, 0.00001];
+T = [0.9998, 0.0001,      0, 0.0001;
+     0.0001, 0.9998,      0, 0.0001;
+          0,      0, 0.9999, 0.0001;
+     0.0001, 0.0001, 0.9997, 0.0001];
  
 % T = [0.9926, 0.0042,      0, 0.0032;
 %      0.0043, 0.9939,      0, 0.0019;
