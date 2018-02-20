@@ -1,10 +1,17 @@
-clear all;
 warning('off')
-% % 
+clear all;
+
 classes = 4;
-% % 
-% % RSSI = []; Labels = [];
 Folder = "Constant/LowPassFilter";
+
+T = readtable(Folder+"/freeliving-pub.csv");
+TestRSSI = [T.(1), T.(2), T.(3), T.(4)];
+TestLabels = [T.(5)];
+clear T;
+
+%% Guassian probabilities
+% % RSSI = []; Labels = [];
+
 %Folder = "Constant/MedianAndLowFilter"; % Reformatted and MovingMedian don't work
 % % 
 % % for i = 1:10
@@ -14,12 +21,7 @@ Folder = "Constant/LowPassFilter";
 % %    Labels = [Labels; T.(5)];
 % % end
 % % 
-T = readtable(Folder+"/freeliving-pub.csv");
-% % TestRSSI = [T.(1), T.(2), T.(3), T.(4)];
-TestLabels = [T.(5)];
-% % 
-clear T;
-warning('on')
+
 % % 
 % % %[U,~,~] = svd(cov(RSSI));
 % % 
@@ -46,15 +48,15 @@ warning('on')
 % %     Prob(:,i) = mvnpdf(TestRSSI,Means{i},Covar{i});
 % % end
 
+%% Random Forest probabilities
+
 T = readtable("RandomForestsProbabilities.csv");
 Prob = [T.(2), T.(3), T.(4), T.(5)]; Prob(1,:) = [];
 clear T;
 
-%figure;
-%plot(Prob(:,1)./sum(Prob,2))
-%
-%figure;
-%plot(TestLabels==1)
+%% Bayesian Prior
+
+warning('on')
 
 % T = [1/3, 1/3,   0, 1/3;
 %      1/3, 1/3,   0, 1/3;
@@ -100,12 +102,12 @@ end
 %     end
 % end
 
-figure;
-plot(Class1-TestLabels)
+range = 1000:1500;
+ErrorGraphPlotter(Class1(range),TestLabels(range))
+
 M1 = confusionmat(TestLabels,Class1); M1 = M1./sum(M1,2)
 sum((Class1-TestLabels)==0)/length(TestLabels)
 
-figure;
-plot(Class2-TestLabels)
-M2 = confusionmat(TestLabels,Class2); M2 = M2./sum(M2,2)
-sum((Class2-TestLabels)==0)/length(TestLabels)
+%ErrorGraphPlotter(Class2,TestLabels)
+%M2 = confusionmat(TestLabels,Class2); M2 = M2./sum(M2,2)
+%sum((Class2-TestLabels)==0)/length(TestLabels)
