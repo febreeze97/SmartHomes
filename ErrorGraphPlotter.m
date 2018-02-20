@@ -10,11 +10,7 @@ Colours = [1,0,0;
            0,1,0;
            0,0,0];
        
-ColVec = zeros(3,size(Label,1));
-for i = 1:size(Label,1)
-    ColVec(:,i) = Colours(Label(i),:);
-end
-ColVec = ColVec';
+ColVec = Colours(Label,:);
 set(groot,'defaultAxesColorOrder',ColVec)
 
 Num = 1:size(Label,1);
