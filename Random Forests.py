@@ -8,11 +8,11 @@ Miss = 'Constant'
 #Pre = 'Reformatted'
 #Pre = 'LowPassFilter' # Better results with smoothed data
 #Pre = 'MovingMean'
-#Pre = 'MovingMedian'
-Pre = 'MedianAndLowFilter'
+Pre = 'MovingMedian'
+#Pre = 'MedianAndLowFilter'
 
 df = pd.DataFrame()
-for i in range(9):
+for i in range(10):
     df1 = pd.read_csv(Miss+'/'+Pre+'/'+ str(i+1) + '.csv')
     # df.append(df1, ignore_index = True)
     frames = [df, df1]
@@ -30,10 +30,11 @@ prediction = clf.predict(df2[features])
 fig = plt.figure()
 # plt.plot(clf.predict(df2[features]))
 # plt.plot(df2['Room'])
-plt.plot(clf.predict(df2[features])-df2['Room'])
+plt.plot(prediction-df2['Room'])
 clf.predict_proba(df2[features])
 plt.show()
-
+y2 = df2['Room'].values
+score=clf.score(df2[features], y2)
 """c = 0
 for i in range(len(prediction)):
  # if prediction[i] == df2['Room'][i]:
@@ -63,11 +64,11 @@ for i in range(len(Mat)):
     print(Mat[i])
 
 right = ( right/len(prediction) ) * 100
-
+print('score = ', score)
 print(right)
 #print(Size)
 
 """print((c/len(prediction))*100)
 print(c)
-# finaldf = pd.DataFrame(clf.predict(df2[features]))
+finaldf = pd.DataFrame(clf.predict_proba(df2[features]))
 # finaldf.to_csv("Random_Forest_Data.csv")"""
