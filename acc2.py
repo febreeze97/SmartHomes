@@ -4,6 +4,9 @@ import numpy as np
 from sklearn import svm
 from sklearn.ensemble import RandomForestClassifier
 
+# 1 is not walking
+# 2 is walking
+
 Smoothed = True
 #Smoothed = False
 
