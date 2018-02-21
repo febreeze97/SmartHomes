@@ -6,7 +6,7 @@ Miss = 'Constant'
 #Miss = 'Linear'
 
 #Pre = 'Reformatted'
-#Pre = 'LowPassFilter' # Better results with smoothed data
+Pre = 'LowPassFilter' # Better results with smoothed data
 #Pre = 'MovingMean'
 Pre = 'MovingMedian'
 #Pre = 'MedianAndLowFilter'
@@ -31,7 +31,7 @@ fig = plt.figure()
 # plt.plot(clf.predict(df2[features]))
 # plt.plot(df2['Room'])
 plt.plot(prediction-df2['Room'])
-clf.predict_proba(df2[features])
+Probs = clf.predict_proba(df2[features])
 plt.show()
 y2 = df2['Room'].values
 score=clf.score(df2[features], y2)
@@ -67,6 +67,9 @@ right = ( right/len(prediction) ) * 100
 print('score = ', score)
 print(right)
 #print(Size)
+
+##Output = pd.DataFrame(Probs)
+##Output.to_csv("RandomForestsProbabilities.csv")
 
 """print((c/len(prediction))*100)
 print(c)

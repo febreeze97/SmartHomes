@@ -52,7 +52,7 @@ switch Pre
 
         RSSI = ifft(FilteredFM);
         
-        RSSI = movmean(RSSI,[5,5]);
+        %RSSI = movmean(RSSI,[5,5]);
 end
 
 if Miss == 0
