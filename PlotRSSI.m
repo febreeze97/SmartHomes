@@ -26,7 +26,8 @@ if nargin == 2
 end
     
 legend('Living Room','Kitchen','Bedroom','Stairs','location','northwest')
-ylabel('RSSI'); xticks([])
+ylabel('RSSI / dB'); xlabel('Time / s')
+%xticks([])
 
 end
 
