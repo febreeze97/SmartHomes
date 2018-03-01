@@ -77,12 +77,12 @@ for i = 1:c.NumTestSets
     NewMeanErr(i) = sum((new-TestLabel')==0)/length(new);
     NewConfMat = NewConfMat + confusionmat(TestLabel,new,'order',[1;2;3;4]);
 end
-fprintf('Built-in package\n')
+%fprintf('Built-in package\n')
 %ConfMat = ConfMat./sum(ConfMat,2)
-mean(MeanErr)*100
+%mean(MeanErr)*100
 
-fprintf('\nMy implementation\n')
-%NewConfMat = NewConfMat./sum(NewConfMat,2)
+%fprintf('\nMy implementation\n')
+NewConfMat = NewConfMat./sum(NewConfMat,2)
 mean(NewMeanErr)*100
 
 
